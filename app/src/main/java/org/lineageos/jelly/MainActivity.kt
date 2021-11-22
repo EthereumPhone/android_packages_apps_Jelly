@@ -115,6 +115,12 @@ class MainActivity : WebViewExtActivity(), SearchBarController.OnCancelListener,
     private var mSearchActive = false
     private val uiScope = CoroutineScope(Dispatchers.Main)
 
+    fun checkIPFS(url: String): String {
+        return if (url.startsWith("ipfs")) {
+            "https://cloudflare-ipfs.com/ipfs/"+ url.replace("ipfs://", "")
+        } else url
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -130,7 +136,7 @@ class MainActivity : WebViewExtActivity(), SearchBarController.OnCancelListener,
         autoCompleteTextView.setOnEditorActionListener { _, actionId: Int, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 UiUtils.hideKeyboard(autoCompleteTextView)
-                mWebView.loadUrl(autoCompleteTextView.text.toString())
+                mWebView.loadUrl(checkIPFS(autoCompleteTextView.text.toString()))
                 autoCompleteTextView.clearFocus()
                 return@setOnEditorActionListener true
             }
@@ -139,7 +145,7 @@ class MainActivity : WebViewExtActivity(), SearchBarController.OnCancelListener,
         autoCompleteTextView.setOnKeyListener { _, keyCode: Int, _ ->
             if (keyCode == KeyEvent.KEYCODE_ENTER) {
                 UiUtils.hideKeyboard(autoCompleteTextView)
-                mWebView.loadUrl(autoCompleteTextView.text.toString())
+                mWebView.loadUrl(checkIPFS(autoCompleteTextView.text.toString()))
                 autoCompleteTextView.clearFocus()
                 return@setOnKeyListener true
             }
@@ -150,7 +156,7 @@ class MainActivity : WebViewExtActivity(), SearchBarController.OnCancelListener,
             val url = searchString.toString()
             UiUtils.hideKeyboard(autoCompleteTextView)
             autoCompleteTextView.clearFocus()
-            mWebView.loadUrl(url)
+            mWebView.loadUrl(checkIPFS(url))
         }
         val intent = intent
         var url = intent.dataString

@@ -25,7 +25,7 @@ object UrlUtils {
     val ACCEPTED_URI_SCHEMA: Pattern = Pattern.compile(
             "(?i)" +  // switch on case insensitive matching
                     "(" +  // begin group for schema
-                    "(?:http|https|content|file|chrome)://" +
+                    "(?:http|https|content|file|chrome|ipfs)://" +
                     "|(?:inline|data|about|javascript):" +
                     ")" +
                     "(.*)"

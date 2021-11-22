@@ -80,7 +80,7 @@ class UrlBarController(
         mEditor.setTextKeepState(text ?: "")
     }
 
-    private val isSecure = mUrl != null && mUrl!!.startsWith("https")
+    private val isSecure = mUrl != null && (mUrl!!.startsWith("https") || mUrl!!.startsWith("ipfs"))
 
     private fun updateSSLCertificateDialog(context: Context, certificate: SslCertificate?) {
         if (certificate == null) return
