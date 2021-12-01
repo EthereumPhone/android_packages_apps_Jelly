@@ -121,6 +121,13 @@ class MainActivity : WebViewExtActivity(), SearchBarController.OnCancelListener,
         } else url
     }
 
+    fun checkETH(url: String): String {
+        url.replace("http://", "https://");
+        return if (url.endsWith(".eth")) {
+            "https://etherscan.io/enslookup-search?search="+ url.replace("https://", "")
+        } else url
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -136,7 +143,7 @@ class MainActivity : WebViewExtActivity(), SearchBarController.OnCancelListener,
         autoCompleteTextView.setOnEditorActionListener { _, actionId: Int, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 UiUtils.hideKeyboard(autoCompleteTextView)
-                mWebView.loadUrl(checkIPFS(autoCompleteTextView.text.toString()))
+                mWebView.loadUrl(checkETH(checkIPFS(autoCompleteTextView.text.toString())))
                 autoCompleteTextView.clearFocus()
                 return@setOnEditorActionListener true
             }
@@ -145,7 +152,7 @@ class MainActivity : WebViewExtActivity(), SearchBarController.OnCancelListener,
         autoCompleteTextView.setOnKeyListener { _, keyCode: Int, _ ->
             if (keyCode == KeyEvent.KEYCODE_ENTER) {
                 UiUtils.hideKeyboard(autoCompleteTextView)
-                mWebView.loadUrl(checkIPFS(autoCompleteTextView.text.toString()))
+                mWebView.loadUrl(checkETH(checkIPFS(autoCompleteTextView.text.toString())))
                 autoCompleteTextView.clearFocus()
                 return@setOnKeyListener true
             }
@@ -156,7 +163,7 @@ class MainActivity : WebViewExtActivity(), SearchBarController.OnCancelListener,
             val url = searchString.toString()
             UiUtils.hideKeyboard(autoCompleteTextView)
             autoCompleteTextView.clearFocus()
-            mWebView.loadUrl(checkIPFS(url))
+            mWebView.loadUrl(checkETH(checkIPFS(url)))
         }
         val intent = intent
         var url = intent.dataString
