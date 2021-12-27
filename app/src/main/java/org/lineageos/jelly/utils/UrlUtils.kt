@@ -57,6 +57,9 @@ object UrlUtils {
             }
             return inUrl
         }
+        if (inUrl.startsWith("ipfs")) {
+            return "https://cloudflare-ipfs.com/ipfs/"+ url.replace("ipfs://", "")
+        }
         return if (!hasSpace && Patterns.WEB_URL.matcher(inUrl).matches()) {
             URLUtil.guessUrl(inUrl)
         } else null

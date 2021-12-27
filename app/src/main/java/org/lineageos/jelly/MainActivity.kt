@@ -166,6 +166,9 @@ class MainActivity : WebViewExtActivity(), SearchBarController.OnCancelListener,
         }
         val intent = intent
         var url = intent.dataString
+        if (url != null) {
+            url = checkIPFS(checkETH(url))
+        }
         mIncognito = intent.getBooleanExtra(IntentUtils.EXTRA_INCOGNITO, false)
         var desktopMode = false
 
