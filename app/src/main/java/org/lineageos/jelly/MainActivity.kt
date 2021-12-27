@@ -122,9 +122,8 @@ class MainActivity : WebViewExtActivity(), SearchBarController.OnCancelListener,
     }
 
     fun checkETH(url: String): String {
-        url.replace("http://", "https://");
         return if (url.endsWith(".eth")) {
-            "https://etherscan.io/enslookup-search?search="+ url.replace("https://", "")
+            "https://$url.xyz/"
         } else url
     }
 
